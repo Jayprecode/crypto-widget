@@ -30,7 +30,7 @@ app.get("/", (req, res) => {
 
 app.get("/list-widget", (req, res) => {
 	fetch(
-		"https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest",
+		"https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?limit=20",
 		requestOptions
 	)
 		.then((response) => response.json())
