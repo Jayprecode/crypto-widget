@@ -2,22 +2,12 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import useInterval from "./hooks/index";
 
-const myHeaders = new Headers();
-myHeaders.append("X-CMC_PRO_API_KEY", "75a514d4-602f-4a5d-b969-92f035d41f62");
-
-const requestOptions = {
-	method: "GET",
-	headers: myHeaders,
-};
 
 function App() {
 	const [listings, setListing] = useState([]);
 
 	const fetchData = () => {
-		fetch(
-			"https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest",
-			requestOptions
-		)
+		fetch("http://localhost:5000/list-widget")
 			.then((res) => res.json())
 			.then((res) => {
 				setListing([...res.data]);
@@ -33,9 +23,15 @@ function App() {
 	return (
 		<AppWrapper>
 			<div>
-				{listings.map(({ name }) => (
-					<p>{name}</p>
-				))}
+				<table id="widget">
+					<tbody>
+						<tr>
+							{listings.map(({ name }) => (
+								<th>{name}</th>
+							))}
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</AppWrapper>
 	);
@@ -53,6 +49,35 @@ const AppWrapper = styled.div`
 		align-items: center;
 		justify-content: center;
 		font-size: calc(10px + 2vmin);
+		color: white;
+	}
+	#widget {
+		text-align: center;
+		font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+		border-collapse: collapse;
+		border: 3px solid #ddd;
+		width: 100%;
+	}
+
+	#widget td,
+	#widget th {
+		border: 1px solid #ddd;
+		padding: 8px;
+	}
+
+	#widget tr:nth-child(even) {
+		background-color: #f2f2f2;
+	}
+
+	#widget tr:hover {
+		background-color: #ddd;
+	}
+
+	#widget th {
+		padding-top: 12px;
+		padding-bottom: 12px;
+		text-align: center;
+		background-color: #4caf50;
 		color: white;
 	}
 `;
